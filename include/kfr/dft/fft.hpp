@@ -207,6 +207,17 @@ struct dft_plan
         else
             execute_dft(cfalse, out.data(), in.data(), temp.data());
     }
+
+    template <univector_tag Tag3>
+    KFR_MEM_INTRINSIC void execute(complex<T>* out, const complex<T>* in,
+                                   univector<u8, Tag3>& temp, bool inverse = false) const
+    {
+        if (inverse)
+            execute_dft(ctrue, out, in, temp.data());
+        else
+            execute_dft(cfalse, out, in, temp.data());
+    }
+
     template <bool inverse, univector_tag Tag1, univector_tag Tag2, univector_tag Tag3>
     KFR_MEM_INTRINSIC void execute(univector<complex<T>, Tag1>& out, const univector<complex<T>, Tag2>& in,
                                    univector<u8, Tag3>& temp, cbool_t<inverse> inv) const
