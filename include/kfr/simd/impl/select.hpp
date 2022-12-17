@@ -217,6 +217,7 @@ KFR_INTRINSIC vec<T, N> select(const vec<bit<T>, N>& a, const T& b, const vec<T,
 }
 
 #elif defined CMT_ARCH_NEON && defined KFR_NATIVE_INTRINSICS
+#if (!CMT_ARCH_NEON64) && (!CMT_ARCH_NEON)
 
 KFR_INTRINSIC f32neon select(const mf32neon& m, const f32neon& x, const f32neon& y)
 {
@@ -226,35 +227,43 @@ KFR_INTRINSIC i8neon select(const mi8neon& m, const i8neon& x, const i8neon& y)
 {
     return vbslq_s8(m.v, x.v, y.v);
 }
+#endif
 KFR_INTRINSIC u8neon select(const mu8neon& m, const u8neon& x, const u8neon& y)
 {
     return vbslq_u8(m.v, x.v, y.v);
 }
+#if (!CMT_ARCH_NEON64) && (!CMT_ARCH_NEON)
 KFR_INTRINSIC i16neon select(const mi16neon& m, const i16neon& x, const i16neon& y)
 {
     return vbslq_s16(m.v, x.v, y.v);
 }
+#endif
 KFR_INTRINSIC u16neon select(const mu16neon& m, const u16neon& x, const u16neon& y)
 {
     return vbslq_u16(m.v, x.v, y.v);
 }
+#if (!CMT_ARCH_NEON64) && (!CMT_ARCH_NEON)
 KFR_INTRINSIC i32neon select(const mi32neon& m, const i32neon& x, const i32neon& y)
 {
     return vbslq_s32(m.v, x.v, y.v);
 }
+#endif 
 KFR_INTRINSIC u32neon select(const mu32neon& m, const u32neon& x, const u32neon& y)
 {
     return vbslq_u32(m.v, x.v, y.v);
 }
+#if (!CMT_ARCH_NEON64) && (!CMT_ARCH_NEON)
 KFR_INTRINSIC i64neon select(const mi64neon& m, const i64neon& x, const i64neon& y)
 {
     return vbslq_s64(m.v, x.v, y.v);
 }
+#endif
 KFR_INTRINSIC u64neon select(const mu64neon& m, const u64neon& x, const u64neon& y)
 {
     return vbslq_u64(m.v, x.v, y.v);
 }
 
+#if (!CMT_ARCH_NEON64) && (!CMT_ARCH_NEON)
 #ifdef CMT_ARCH_NEON64
 KFR_INTRINSIC f64neon select(const mf64neon& m, const f64neon& x, const f64neon& y)
 {
@@ -265,6 +274,7 @@ KFR_INTRINSIC f64neon select(const mf64neon& m, const f64neon& x, const f64neon&
 {
     return y ^ ((x ^ y) & m.asvec());
 }
+#endif
 #endif
 
 template <typename T, size_t N, KFR_ENABLE_IF(N < vector_width<T> && !is_simd_size<T>(N))>
